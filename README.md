@@ -36,9 +36,11 @@ var monitor = createMonitor( sPlugin, pPlugin );
 
 Note: plugins are executed in the same order as they are provided to the middleware generator.
 
-Each plugin should be a single method which accepts two input arguments: [`object`, `clbk`]. The `object` is a shared `object` among all plugins, hence, when choosing plugins, ensure that they are property namespaced when appending to the `object`.
+Each plugin should be a single method which accepts two input arguments: [`object`, `clbk`]. The `object` is a shared `object` among all plugins; hence, when choosing plugins, ensure that they are property namespaced when appending to the `object`.
 
 The callback should be invoked once the plugin finishes appending metrics. The callback takes an optional `error` argument, which will be bubbled up through the middleware.
+
+See [monitor-plugin-os](https://github.com/kgryte/monitor-plugin-os) and [monitor-plugin-process](https://github.com/kgryte/monitor-plugin-process) for plugin examples.
 
 
 #### monitor( request, response, next )
