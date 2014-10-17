@@ -5,10 +5,7 @@ Monitor
 > Connect middleware to monitor an application process.
 
 
----
 ## Installation
-
-For use in Node.js,
 
 ``` bash
 $ npm install connect-middleware-monitor
@@ -16,14 +13,98 @@ $ npm install connect-middleware-monitor
 
 ## Usage
 
+To use the module,
+
+``` javascript
+var createMonitor = require( 'connect-middleware-monitor' );
+```
+
+#### createMonitor( [...plugin] )
+
+The middleware generator accepts monitor plugins which append to a common metrics `object`. 
+
+``` javascript
+var // Plugin which reports system metrics:
+	sPlugin = require( 'monitor-plugin-os' ),
+
+	// Plugin which reports current process metrics:
+	pPlugin = require( 'monitor-plugin-process' );
+
+// Create the monitor middleware:
+var monitor = createMonitor( sPlugin, pPlugin );
+```
+
+Note: plugins are executed in the same order as they are provided to the middleware generator.
+
+Each plugin should be a single method which accepts two input arguments: [`object`, `clbk`]. The `object` is a shared `object` among all plugins, hence, when choosing plugins, ensure that they are property namespaced when appending to the `object`.
+
+The callback should be invoked once the plugin finishes appending metrics. The callback takes an optional `error` argument, which will be bubbled up through the middleware.
+
+
+#### monitor( request, response, next )
+
+The generated middleware follows the [connect](https://github.com/senchalabs/connect) middleware pattern. Monitor metrics are appended to the `request` object via a `locals` object. Hence, downstream middleware consumers may access the metrics via
+
+``` javascript
+var metrics = request.locals.monitor;
+```
+
+See the examples below.
 
 
 
 
-## Notes
+## Examples
+
+``` javascript
+var express = require( 'express' ),
+	request = require( 'request' ),
+	sPlugin = require( 'monitor-plugin-os' ),
+	pPlugin = require( 'monitor-plugin-process' ),
+	createMonitor = require( 'connect-middleware-monitor' );
+
+// Define a port:
+var PORT = 7331;
+
+// Create a new monitor:
+var monitor = createMonitor( sPlugin, pPlugin );
+
+// Create a new application:
+var app = express();
+
+// Bind a route using the monitor middleware:
+app.get( '/', [ monitor, sendJSON ] );
+
+// Spin up a new server:
+var server = app.listen( PORT, onListen );
 
 
+function onListen() {
+	request({
+		'method': 'GET',
+		'uri': 'http://127.0.0.1:' + PORT
+	}, onResponse );
+}
 
+function onResponse( error, response, body ) {
+	if ( error ) {
+		throw new Error( error );
+	}
+	console.log( body );
+}
+
+function sendJSON( request, response, next ) {
+	response
+		.status( 200 )
+		.send( JSON.stringify( request.locals.monitor ) );
+}
+```
+
+To run an example from the top-level application directory,
+
+``` bash
+$ node ./examples/index.js
+```
 
 
 ## Tests

@@ -32,14 +32,16 @@
     "metrics",
     "performance"
   ],
-  "dependencies": {
-    "toobusy": "^0.2.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "1.x.x",
     "coveralls": "^2.11.1",
+    "express": "^4.9.7",
     "istanbul": "^0.3.0",
-    "mocha": "1.x.x"
+    "mocha": "1.x.x",
+    "monitor-plugin-os": "^1.0.0",
+    "monitor-plugin-process": "^1.0.0",
+    "request": "^2.45.0"
   },
   "engines": {
     "node": ">= 0.10.0"
