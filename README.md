@@ -36,16 +36,16 @@ var monitor = createMonitor( sPlugin, pPlugin );
 
 Note: plugins are executed in the same order as they are provided to the middleware generator.
 
-Each plugin should be a single method which accepts two input arguments: [`object`, `clbk`]. The `object` is a shared `object` among all plugins; hence, when choosing plugins, ensure that they are property namespaced when appending to the `object`.
+Each plugin should be a single method which accepts two input arguments: [`object`, `clbk`]. The `object` is a shared `object` among all plugins; hence, when choosing plugins, ensure that they are properly namespaced when appending to the `object`.
 
-The callback should be invoked once the plugin finishes appending metrics. The callback takes an optional `error` argument, which will be bubbled up through the middleware.
+The callback should be invoked once the plugin finishes appending metrics. The callback takes an optional `error` argument. Any errors are bubbled up through the middleware.
 
 See [monitor-plugin-os](https://github.com/kgryte/monitor-plugin-os) and [monitor-plugin-process](https://github.com/kgryte/monitor-plugin-process) for plugin examples.
 
 
 #### monitor( request, response, next )
 
-The generated middleware follows the [connect](https://github.com/senchalabs/connect) middleware pattern. Monitor metrics are appended to the `request` object via a `locals` object. Hence, downstream middleware consumers may access the metrics via
+The generated middleware follows the [connect](https://github.com/senchalabs/connect) middleware pattern. Monitor metrics are appended to the `request` object via a `locals` property. Hence, downstream middleware consumers may access the metrics via
 
 ``` javascript
 var metrics = request.locals.monitor;
