@@ -113,8 +113,8 @@ $ node ./examples/index.js
 
 List of monitor plugins:
 
-*	[monitor-plugin-os](https://github.com/kgryte/monitor-plugin-os)
-*	[monitor-plugin-process](https://github.com/kgryte/monitor-plugin-process)
+*	[monitor-plugin-os](https://github.com/kgryte/monitor-plugin-os): system-level metrics
+*	[monitor-plugin-process](https://github.com/kgryte/monitor-plugin-process): current process metrics
 
 
 ## Tests
