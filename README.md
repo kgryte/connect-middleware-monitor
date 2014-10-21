@@ -109,6 +109,14 @@ $ node ./examples/index.js
 ```
 
 
+## Plugins
+
+List of monitor plugins:
+
+*	[monitor-plugin-os](https://github.com/kgryte/monitor-plugin-os)
+*	[monitor-plugin-process](https://github.com/kgryte/monitor-plugin-process)
+
+
 ## Tests
 
 ### Unit
