@@ -1,6 +1,6 @@
 {
   "name": "connect-middleware-monitor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect middleware to monitor an application process.",
   "author": {
     "name": "Athan Reines",
